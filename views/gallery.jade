@@ -1,0 +1,105 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic')
+    link(rel='stylesheet', type='text/css', href='css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='css/magnific-popup.css')
+    // Magnific Popup core CSS file
+    link(rel='stylesheet', type='text/css', href='css/style.css')
+    title Gallery
+  body.gallery-page
+    .main-body
+      .container
+        .row
+          .main-page
+            // content-main
+            .content-main.gallery_main
+              .gallery-main-inner
+                .form-group
+                  a.btn.view_more(href='/') BACK
+                .col-md-12.gallery_title_main
+                  .gallery_title
+                    h3 GALLERY
+                    h4 Search
+                  br(style='clear:both;')
+                #content.gallery-images-container
+                  .box-gutter
+                  .box-sizer
+                  form.form-horizontal(method='post', action='/gallery')
+                    .box
+                      .form-group
+                        input#tag.form-control(type='text', name='tag', placeholder='#TAG', value='')
+                    .box
+                      .form-group
+                        input#keyword.form-control(type='text', name='keyword', placeholder='KEYWORD', value='')
+                    .box
+                      .form-group
+                        input#username.form-control(type='text', name='username', placeholder='USERNAME', value='')
+                    .box
+                      .form-group
+                        input#submit.btn.view_more.btn-submit(name='submit', type='submit', value='Search')
+                #content.gallery-images-container
+                  .box-gutter
+                  .box-sizer
+                  .box
+                    a(href='images_insta/11189145_499587246856169_257039100_n.jpg')
+                      img(alt='Agra picture', src='images_insta/11189145_499587246856169_257039100_n.jpg')
+                    p
+                      | Photo text field
+                  .box
+                    a(href='images_insta/11186970_374883439365287_838703965_n.jpg')
+                      img(alt='Agra picture', src='images_insta/11186970_374883439365287_838703965_n.jpg')
+                    p
+                      | Photo text field
+                  .box
+                    a(href='images_insta/11189306_1828726267353132_1879988525_n.jpg')
+                      img(alt='Agra picture', src='images_insta/11189306_1828726267353132_1879988525_n.jpg')
+                    p
+                      | Photo text field
+          // .main-page
+        // .row
+        footer.row
+          .col-xs-12.col-sm-12.col-md-12.col-lg-12.footer
+            p
+        // .row
+      // .container
+    // .main-body
+    script(src='js/jquery-1.11.3.min.js')
+    script(src='js/bootstrap.min.js')
+    script(src='js/imagesloaded.3.1.8.min.js')
+    script(src='js/jquery.masonry.3.2.1.min.js')
+    // http://masonry.desandro.com/
+    script(src='js/jquery.magnific-popup.min.js')
+    // http://dimsemenov.com/plugins/magnific-popup/
+    script.
+      function init_masonry(){
+      var $container = $('#content');
+      $container.imagesLoaded( function(){
+      $container.masonry({
+      itemSelector: '.box',
+      isAnimated: true
+      });
+      });
+      }
+      $(document).ready(function(){
+      //Init jQuery Masonry layout
+      init_masonry();
+      // Magnific Popup
+      $('.gallery-images-container').magnificPopup({
+      delegate: 'a', // child items selector, by clicking on it popup will open
+      type: 'image',
+      gallery: {
+      enabled: true,
+      navigateByImgClick: true,
+      preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+      },
+      });
+      //Select menu onchange
+      $("#collapsed-navbar").change(function () {
+      window.location = $(this).val();
+      });
+      });

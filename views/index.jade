@@ -1,0 +1,75 @@
+doctype html
+html(lang='en')
+  thead
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', type='text/css', href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic')
+    link(rel='stylesheet', type='text/css', href='css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='css/style.css')
+    //
+      Accord Template
+      http://www.templatemo.com/tm-478-accord
+    title Home
+  tbody
+    .main-body
+      .container
+        .row
+          .main-page
+            aside.main-navigation
+              .main-menu
+                // sidebar carousel
+                .menu-container
+                  .mauris
+                    #carousel-menu.carousel.slide(data-ride='carousel')
+                      // Wrapper for slides
+                      .carousel-inner(role='listbox')
+                        .item.active
+                          img#my_image(src='images_insta/11190878_897181026988034_344816802_n.jpg', alt='slider')
+                          .carousel-caption.menu-caption
+                            | Name;Description
+                        .item
+                          img(src='images_insta/11195725_554405951365808_1346992064_n.jpg', alt='slider')
+                          .carousel-caption.menu-caption
+                            | Name;Description #{slider_img}
+                      // Controls
+                      a.left.carousel-control(href='#carousel-menu', role='button', data-slide='prev')
+                        span.fa.fa-caret-left(aria-hidden='true')
+                        span.sr-only Previous
+                      a.right.carousel-control(href='#carousel-menu', role='button', data-slide='next')
+                        span.fa.fa-caret-right(aria-hidden='true')
+                        span.sr-only Next
+                  // .mauris
+                .menu-container
+                  .block-keep-ratio.block-keep-ratio-1-1.block-keep-ratio-md-2-1.block-width-full.gallery
+                    a.main-menu-link.block-keep-ratio__content(href='/gallery')
+                      span.main-menu-link-text
+              // main-menu
+            // main-navigation
+            .content-main
+              .row.margin-b-30
+                .col-xs-6.col-sm-6.col-md-12.col-lg-12
+                  .banner-main-home
+                    .banner-main-home-text
+                      .heading
+                          h1= title
+                          p.text-uppercase Search!
+                      .desc
+                        p
+                        a(href='/random')
+                          button(type='button') RANDOM PHOTO
+                    img.img-responsive(src='images/home-img-1.png', alt='Image')
+            // .content-main
+          // .main-page
+        // .row
+        footer.row
+          .col-xs-12.col-sm-12.col-md-12.col-lg-12.footer
+            p.copyright
+            p.copyright
+        // .row
+      // .container
+    // .main-body
+    // JavaScript
+    script(src='js/jquery-1.11.3.min.js')
+    script(src='js/bootstrap.min.js')
