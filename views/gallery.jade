@@ -45,21 +45,17 @@ html(lang='en')
                 #content.gallery-images-container
                   .box-gutter
                   .box-sizer
-                  .box
-                    a(href='images_insta/11189145_499587246856169_257039100_n.jpg')
-                      img(alt='Agra picture', src='images_insta/11189145_499587246856169_257039100_n.jpg')
-                    p
-                      | Photo text field
-                  .box
-                    a(href='images_insta/11186970_374883439365287_838703965_n.jpg')
-                      img(alt='Agra picture', src='images_insta/11186970_374883439365287_838703965_n.jpg')
-                    p
-                      | Photo text field
-                  .box
-                    a(href='images_insta/11189306_1828726267353132_1879988525_n.jpg')
-                      img(alt='Agra picture', src='images_insta/11189306_1828726267353132_1879988525_n.jpg')
-                    p
-                      | Photo text field
+                  each publication in list
+                    .box
+                      a(href=publication.photo)
+                        img(alt='Agra picture', src=publication.photo)
+                      center
+                        p
+                          | #{publication.user}
+
+                          p #{publication.text}
+
+                  
           // .main-page
         // .row
         footer.row
