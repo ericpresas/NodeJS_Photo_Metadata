@@ -14,19 +14,20 @@ html(lang='en')
     title Random Photo
   tbody
     .main-body
-      .container
+      .container 
         .row
           .main-page
             // content-main
             .content-main.gallery_main
               .form-group
                   a.btn.view_more(href='/') BACK
-                    a(href='images_insta/11189145_499587246856169_257039100_n.jpg')
+                    a(href=result)
                       center
-                          img(alt='Agra picture', src='images_insta/11189145_499587246856169_257039100_n.jpg')
+                          img(alt='Agra picture', src=result)
                       center
-                        p
-                          | Photo text field
+                        p Imatge pujada per: #{usuari}, #{like} likes
+                          
+                          p  Descripció imatge: #{desc}
           // .main-page
         // .row
         footer.row
