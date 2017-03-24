@@ -28,6 +28,10 @@ html(lang='en')
                         p Imatge pujada per: #{usuari}, #{like} likes
                           
                           p  Descripció imatge: #{desc}
+                          p  Comentaris:
+                            for publication in publications
+                              p #{publication} 
+
           // .main-page
         // .row
         footer.row
