@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
   var comments = [];
     var commenenters = [];
   //agafar 1 fotos aleatoria i mostrarla amb descripció i nom d'usuari.
-  db.collection('InstaFotos').find({},{filename:1,"informacio.caption.text":1,"informacio.user.full_name":1,"informacio.likes.count":1,"informacio.comments":1, _id:0}).limit( 1 ).skip(Math.floor(Math.random() * 125 )).toArray(function(err, filename) {
+  db.collection('InstaFotos').find({},{filename:1,"informacio.caption.text":1,"informacio.user.full_name":1,"informacio.likes.count":1,"informacio.comments":1, _id:0}).limit( 1 ).skip(Math.floor(Math.random() * 30 )).toArray(function(err, filename) {
     console.log('------------------------------------');
     console.log(filename);
     console.log('+++++++');

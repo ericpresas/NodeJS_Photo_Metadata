@@ -26,13 +26,14 @@ html(lang='en')
                       // Wrapper for slides
                       .carousel-inner(role='listbox')
                         .item.active
-                          img#my_image(src='images_insta/11190878_897181026988034_344816802_n.jpg', alt='slider')
-                          .carousel-caption.menu-caption
-                            | Name;Description
-                        .item
-                          img(src='images_insta/11195725_554405951365808_1346992064_n.jpg', alt='slider')
-                          .carousel-caption.menu-caption
-                            | Name;Description #{slider_img}
+                            img#my_image(src=list[0].photo, alt='slider')
+                            .carousel-caption.menu-caption
+                              | #{list[0].text}
+                        each publication in list
+                          .item
+                            img#my_image(src=publication.photo, alt='slider')
+                            .carousel-caption.menu-caption
+                              | #{publication.text}
                       // Controls
                       a.left.carousel-control(href='#carousel-menu', role='button', data-slide='prev')
                         span.fa.fa-caret-left(aria-hidden='true')
@@ -53,7 +54,7 @@ html(lang='en')
                   .banner-main-home
                     .banner-main-home-text
                       .heading
-                          h1= title
+                          h1 Photo Instagram Metadata
                           p.text-uppercase Search!
                       .desc
                         p

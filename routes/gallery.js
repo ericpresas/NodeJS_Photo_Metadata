@@ -46,6 +46,7 @@ router.post('/', function(req, res, next) {
   //Rebem els params del form
   var usr= req.body.username
   var tags= req.body.tag
+  var fullname = req.body.fullname
 
   //declarem les variables on posarem els resultats
   var name = [];
@@ -57,96 +58,102 @@ router.post('/', function(req, res, next) {
   var temp_text=null
   var publications = {};
   publications.list = new Array();
-  //Apanyo per colar la tag dins de la query
-//var name = "informacio.caption.text";
-//var value = "{$regex : .*";
-//value+=tags.toString();
-//value+=".*}";
-//var query = {};
-//query[name] = value;
-var query2 = {};
-if (tags.toString() !=""){
-var query2 = { "informacio.caption.text": new RegExp('' + tags) };
+  var query = {};
+  query.list = new Array();
 
-//var publications = {};
-
-
-
-
-console.log(query2);
-  //  console.log(tags);
   //Query al mongo , OJUUUU COM LI POSEM EL CONTAINS #TAGS AL TEXT
-    db.collection('InstaFotos').find({ $or: [{"informacio.user.username": usr}, query2]} ,{filename:1, "informacio.user.full_name":1, "informacio.user.username":1, "informacio.caption.text":1}).toArray(function(err, filename){
-    //iterem sobre els resultats agafant la informació i fent una "neteja" dels paths per tema barres windows i path realtiu
-for (i in filename){
-    str_res_path[i]=JSON.stringify(filename[i].filename);
-    str_res_path[i]=str_res_path[i].substring(47,str_res_path[i].lastIndexOf(".jpg")+4);
-    str_res_path[i] = str_res_path[i].replace(/\\/g, "/");
-    str_res_path[i] = str_res_path[i].replace("//", "/");
-    str_res_path[i] = str_res_path[i].replace("//", "/");
-    str_res_path[i] = str_res_path[i].replace("//", "/");
-    name[i]=JSON.stringify(filename[i].informacio.user.full_name);
-    usr_name[i]=JSON.stringify(filename[i].informacio.user.username);
-    usr_name[i]=usr_name[i].replace('"',"");
-    usr_name[i]=usr_name[i].replace('"',"");
-    textos[i]=JSON.stringify(filename[i].informacio.caption.text);
-    //str_res_path[i] = str_res_path[i].replace('"', "");
-    temp_photo = str_res_path[i];
-    temp_usr = usr_name[i];
-    temp_text= textos[i];
-   console.log(temp_photo);
-   console.log(temp_usr);
-   publications.list.push({
-     "photo" : temp_photo,
-      "user"  : temp_usr,
-      "text": temp_text    //S'ha d'afegir la descripció
-      });
 
-  //  console.log(str_res_path);
-   // console.log(usr_name);
-}
-
-   console.log(publications)
-     res.render('gallery', publications);
-
+  if (tags.toString() !="" && usr.toString() !="" && fullname.toString() !="" ){
+    query.list.push({
+      "informacio.user.username": usr,
+      "informacio.caption.text": new RegExp('' + tags),
+      "informacio.user.fullname" : fullname
     });
-}
-else {
-        db.collection('InstaFotos').find({ $or: [{"informacio.user.username": usr}]} ,{filename:1, "informacio.user.full_name":1, "informacio.user.username":1, "informacio.caption.text":1}).toArray(function(err, filename){
-    //iterem sobre els resultats agafant la informació i fent una "neteja" dels paths per tema barres windows i path realtiu
-for (i in filename){
-    str_res_path[i]=JSON.stringify(filename[i].filename);
-    str_res_path[i]=str_res_path[i].substring(47,str_res_path[i].lastIndexOf(".jpg")+4);
-    str_res_path[i] = str_res_path[i].replace(/\\/g, "/");
-    str_res_path[i] = str_res_path[i].replace("//", "/");
-    str_res_path[i] = str_res_path[i].replace("//", "/");
-    str_res_path[i] = str_res_path[i].replace("//", "/");
-    name[i]=JSON.stringify(filename[i].informacio.user.full_name);
-    usr_name[i]=JSON.stringify(filename[i].informacio.user.username);
-    usr_name[i]=usr_name[i].replace('"',"");
-    usr_name[i]=usr_name[i].replace('"',"");
-    textos[i]=JSON.stringify(filename[i].informacio.caption.text);
-    //str_res_path[i] = str_res_path[i].replace('"', "");
-    temp_photo = str_res_path[i];
-    temp_usr = usr_name[i];
-    temp_text= textos[i];
-   console.log(temp_photo);
-   console.log(temp_usr);
-   publications.list.push({
-     "photo" : temp_photo,
-      "user"  : temp_usr,
-      "text": temp_text    //S'ha d'afegir la descripció
-      });
-
-  //  console.log(str_res_path);
-   // console.log(usr_name);
-}
-
-   console.log(publications)
-     res.render('gallery', publications);
-
+    
+    console.log(query);
+    //  console.log(tags);
+    
+      
+  }else if (tags.toString() =="" && usr.toString() !="" && fullname.toString() =="" ){
+    query.list.push({
+      "informacio.user.username": usr
+    });      
+  }else if(tags.toString() !="" && usr.toString() =="" && fullname.toString() =="" ){
+    query.list.push({
+      "informacio.caption.text": new RegExp('' + tags)
     });
-}
+  }else if(tags.toString() =="" && usr.toString() =="" && fullname.toString() !="" ){
+    query.list.push({
+      "informacio.user.fullname" : fullname
+    });
+  }else{
+    db.collection('InstaFotos').find({},{filename:1,"informacio.user.username":1,"informacio.caption.text":1, _id:0}).limit( 9 ).skip(Math.floor(Math.random() * 30 )).toArray(function(err, filename) {
+    console.log('------------------------------------');
+    console.log(filename);
+    console.log('+++++++');
+//PROCESSAT DE PATHS
+    for (i in filename){
+        str_res_path[i]=JSON.stringify(filename[i].filename);
+        str_res_path[i]=str_res_path[i].substring(47,str_res_path[i].lastIndexOf(".jpg")+4);
+        str_res_path[i] = str_res_path[i].replace(/\\/g, "/");
+        str_res_path[i] = str_res_path[i].replace("//", "/");
+        str_res_path[i] = str_res_path[i].replace("//", "/");
+        str_res_path[i] = str_res_path[i].replace("//", "/");
+        name[i]=JSON.stringify(filename[i].informacio.user.full_name);
+        usr_name[i]=JSON.stringify(filename[i].informacio.user.username);
+        usr_name[i]=usr_name[i].replace('"',"");
+        usr_name[i]=usr_name[i].replace('"',"");
+        textos[i]=JSON.stringify(filename[i].informacio.caption.text);
+        //str_res_path[i] = str_res_path[i].replace('"', "");
+        temp_photo = str_res_path[i];
+        temp_usr = usr_name[i];
+        temp_text= textos[i];
+       console.log(temp_photo);
+       console.log(temp_usr);
+       publications.list.push({
+         "photo" : temp_photo,
+          "user"  : temp_usr,
+          "text": temp_text    //S'ha d'afegir la descripció
+          });
+    }
+    res.render('gallery', publications)
+  });
+  }
+
+
+db.collection('InstaFotos').find({ $or: query.list} ,{filename:1, "informacio.user.full_name":1, "informacio.user.username":1, "informacio.caption.text":1}).toArray(function(err, filename){
+    //iterem sobre els resultats agafant la informació i fent una "neteja" dels paths per tema barres windows i path realtiu
+    for (i in filename){
+        str_res_path[i]=JSON.stringify(filename[i].filename);
+        str_res_path[i]=str_res_path[i].substring(47,str_res_path[i].lastIndexOf(".jpg")+4);
+        str_res_path[i] = str_res_path[i].replace(/\\/g, "/");
+        str_res_path[i] = str_res_path[i].replace("//", "/");
+        str_res_path[i] = str_res_path[i].replace("//", "/");
+        str_res_path[i] = str_res_path[i].replace("//", "/");
+        name[i]=JSON.stringify(filename[i].informacio.user.full_name);
+        usr_name[i]=JSON.stringify(filename[i].informacio.user.username);
+        usr_name[i]=usr_name[i].replace('"',"");
+        usr_name[i]=usr_name[i].replace('"',"");
+        textos[i]=JSON.stringify(filename[i].informacio.caption.text);
+        //str_res_path[i] = str_res_path[i].replace('"', "");
+        temp_photo = str_res_path[i];
+        temp_usr = usr_name[i];
+        temp_text= textos[i];
+       console.log(temp_photo);
+       console.log(temp_usr);
+       publications.list.push({
+         "photo" : temp_photo,
+          "user"  : temp_usr,
+          "text": temp_text    //S'ha d'afegir la descripció
+          });
+
+      //  console.log(str_res_path);
+       // console.log(usr_name);
+    }
+
+  console.log(publications)
+  res.render('gallery', publications);
+});
    // console.log(request.body.user.email);
 
 //retornem els resultats
