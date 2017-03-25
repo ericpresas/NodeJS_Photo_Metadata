@@ -2,7 +2,6 @@
 
 Resources to run application:
  - Npm, NodeJS, mongoDB have to be installed
- - Mongo DataBase, download our sample [here](google.es)
  - Structure of DB:
  <p align="left">
   <img src="docs/mongodbstructure.png"/>
