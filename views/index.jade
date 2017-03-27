@@ -25,15 +25,17 @@ html(lang='en')
                     #carousel-menu.carousel.slide(data-ride='carousel')
                       // Wrapper for slides
                       .carousel-inner(role='listbox')
-                        .item.active
-                            img#my_image(src=list[0].photo, alt='slider')
-                            .carousel-caption.menu-caption
-                              | #{list[0].text}
-                        each publication in list
-                          .item
-                            img#my_image(src=publication.photo, alt='slider')
-                            .carousel-caption.menu-caption
-                              | #{publication.text}
+                        each publication, index in list
+                          if index==0
+                            .item.active
+                              img#my_image(src=publication.photo, alt='slider')
+                              .carousel-caption.menu-caption
+                                | #{publication.text}
+                          else
+                            .item
+                              img#my_image(src=publication.photo, alt='slider')
+                              .carousel-caption.menu-caption
+                                | #{publication.text}
                       // Controls
                       a.left.carousel-control(href='#carousel-menu', role='button', data-slide='prev')
                         span.fa.fa-caret-left(aria-hidden='true')

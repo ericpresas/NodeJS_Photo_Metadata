@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
   var publications = {};
   publications.list = new Array();
   //agafar 3 fotos aleatoria i mostrarla amb descripció i nom d'usuari.
-  db.collection('InstaFotos').find({},{filename:1,"informacio.caption.text":1, _id:0}).limit( 3 ).skip(Math.floor(Math.random() * 30 )).toArray(function(err, filename) {
+  db.collection('InstaFotos').find({},{filename:1,"informacio.caption.text":1, _id:0}).limit( 10 ).skip(Math.floor(Math.random() * 30 )).toArray(function(err, filename) {
     console.log('------------------------------------');
     console.log(filename);
     console.log('+++++++');
@@ -50,12 +50,14 @@ router.get('/', function(req, res, next) {
 	    temp_text= textos[i];
 	    console.log(temp_photo);
 	    console.log(temp_usr);
-	    publications.list.push({
-	     "photo" : temp_photo,
-	      "text": temp_text   
+      publications.list.push({
+         "photo" : temp_photo,
+          "text": temp_text   
       });
-	  }
-	  res.render('index', publications)
+      }
+	    
+	  
+	  res.render('index', publications);
 	});
 });
 
